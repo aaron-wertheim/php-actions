@@ -7,6 +7,6 @@ class Greeter {
 			return "Hello, $name!";
 		}
 
-		return "Hell!";
+		return "Hello!";
 	}
 }
