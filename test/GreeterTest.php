@@ -1,5 +1,6 @@
 <?php
 namespace App\Test;
+require __DIR__ . "/../src/Greeter.php";
 
 use App\Greeter;
 
