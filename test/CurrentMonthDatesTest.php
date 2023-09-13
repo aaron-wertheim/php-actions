@@ -1,5 +1,4 @@
 <?php
-namespace App\Test;
 require __DIR__ . "/../src/CurrentMonthDates.php";
 
 use App\CurrentMonthDates;

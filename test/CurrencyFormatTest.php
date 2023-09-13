@@ -1,5 +1,4 @@
 <?php
-namespace App\Test;
 require __DIR__ . "/../src/CurrencyFormat.php";
 
 use App\CurrencyFormat;
