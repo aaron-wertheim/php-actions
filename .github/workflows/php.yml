@@ -34,7 +34,11 @@ jobs:
 
     - name: PHP Code Sniffer
       uses: php-actions/phpcs@v1
-      run: --standard=PSR2 $(git diff-tree --no-commit-id --name-only -r `git log --format="%H" -n 1` | grep .php)
       continue-on-error: true
+      with:
+        php_version: 8.1
+        path: src/
+        args: --standard=PSR2 ${{git diff-tree --no-commit-id --name-only -r `git log --format="%H" -n 1` | grep .php}}
+
 
 
