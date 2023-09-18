@@ -37,7 +37,5 @@ jobs:
       with:
         php_version: 8.1
         path: src/
-        standard: phpcs.xml
-
 
 
