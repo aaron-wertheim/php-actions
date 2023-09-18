@@ -10,7 +10,7 @@
     "phpunit/phpunit": "9.*"
   },
   "scripts": {
-    "test": "vendor/bin/phpunit"
+    "test": "phpunit test"
   },
   "autoload": {
     "psr-4": {
