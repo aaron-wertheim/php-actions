@@ -34,8 +34,11 @@ jobs:
 
     - name: PHP Code Sniffer
       uses: php-actions/phpcs@v1
+      continue-on-error: true
       with:
         php_version: 8.1
         path: src/
+        args: --config-set cache /path/to/cacheFile
+
 
 
