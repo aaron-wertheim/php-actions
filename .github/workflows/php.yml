@@ -33,5 +33,5 @@ jobs:
       run: composer install --prefer-dist --no-progress
 
     - name: PHP Code Sniffer
-      uses: php-actions/phpcs@v3
+      uses: php-actions/phpcs@v2
 
