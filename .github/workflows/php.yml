@@ -35,8 +35,9 @@ jobs:
     - name: PHP Code Sniffer
       uses: php-actions/phpcs@v1
       with:
-        path: src
-        args: --config-set cache true
+        php_version: 8.1
+        path: src/
+        standard: phpcs.xml
 
 
 
