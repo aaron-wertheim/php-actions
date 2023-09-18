@@ -10,7 +10,8 @@
     "phpunit/phpunit": "9.*"
   },
   "scripts": {
-    "test": "vendor/bin/phpunit"
+    "test": "pwd",
+    "test2": "ls"
   },
   "autoload": {
     "psr-4": {
