@@ -36,5 +36,7 @@ jobs:
       uses: php-actions/phpcs@v1
       with:
         path: src
-        args: --cache
+        args: config-set cache true
+
+
 
