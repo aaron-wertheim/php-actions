@@ -38,7 +38,7 @@ jobs:
       with:
         php_version: 8.1
         path: src/
-        args: --config-set cache /path/to/cacheFile
+        args: --cache
 
 
 
