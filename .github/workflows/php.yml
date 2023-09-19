@@ -14,15 +14,10 @@ jobs:
 
     - uses: php-actions/composer@v6
 
-    - name: Require Code Sniffer
-      run: composer global require squizlabs/php_codesniffer
-
     - name: Run Code Sniffer
-      run: composer run-script phpcs
-#      uses: php-actions/phpcs@v1
-#      continue-on-error: true
-#      with:
-#        path: $(git diff-tree --no-commit-id --name-only -r `git log --format="%H" -n 1` | grep .php)
-
+      uses: php-actions/phpcs@v3
+      continue-on-error: true
+      with:
+        path: src
 
 
