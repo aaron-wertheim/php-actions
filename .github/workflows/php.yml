@@ -3,6 +3,11 @@ name: PHP Code Sniffer
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
 
 jobs:
   build:
@@ -12,12 +17,26 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - uses: php-actions/composer@v6
+    - name: Validate composer.json and composer.lock
+      run: composer validate
 
-    - name: Run Code Sniffer
-      uses: php-actions/phpcs@v3
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v3
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress
+
+    - name: Code Sniffer
+      uses: php-actions/phpcs@v1
       continue-on-error: true
       with:
-        path: src
+        path: src test
+
 
 
