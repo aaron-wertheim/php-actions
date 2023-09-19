@@ -18,7 +18,7 @@ jobs:
       uses: php-actions/phpcs@v1
       continue-on-error: true
       with:
-        stdin-path: $(git diff-tree --no-commit-id --name-only -r `git log --format="%H" -n 1` | grep .php)
+        vendored_phpcs_path: $(git diff-tree --no-commit-id --name-only -r `git log --format="%H" -n 1` | grep .php)
 
 
 
