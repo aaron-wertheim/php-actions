@@ -14,7 +14,10 @@ jobs:
 
     - uses: php-actions/composer@v6
 
-    - name: Code Sniffer
+    - name: Require Code Sniffer
+      run: composer global require squizlabs/php_codesniffer
+
+    - name: Run Code Sniffer
       run: composer run-script phpcs
 #      uses: php-actions/phpcs@v1
 #      continue-on-error: true
