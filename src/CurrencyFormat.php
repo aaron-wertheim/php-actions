@@ -2,8 +2,10 @@
 
 namespace App;
 
-class CurrencyFormat {
-    public function get_currency_format($amount, $show_plus = true): string {
+class CurrencyFormat
+{
+    public function get_currency_format($amount, $show_plus = true): string
+    {
         $negative = false;
 
         if ($amount < 0.0) {

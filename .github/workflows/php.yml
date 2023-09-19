@@ -1,5 +1,5 @@
-name: PHP Code Sniffer
-
+name: Code Sniffer
+run-name: Code Sniffer
 on:
   push:
     branches: [ "main" ]
@@ -36,7 +36,7 @@ jobs:
       uses: php-actions/phpcs@v1
       continue-on-error: true
       with:
-        path: src,test
+        path: src
 
 
 

@@ -2,8 +2,10 @@
 
 namespace App;
 
-class CurrentMonthDates {
-    function get_current_month_dates(): array {
+class CurrentMonthDates
+{
+    function get_current_month_dates(): array
+    {
         $start_date = date('Y-m-01');
 
         $end_date = date('Y-m-t');

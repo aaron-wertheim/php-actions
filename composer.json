@@ -9,9 +9,6 @@
     "ext-sqlite3": "*",
     "phpunit/phpunit": "9.*"
   },
-  "scripts": {
-    "phpcs": "phpcs $(git diff-tree --no-commit-id --name-only -r `git log --format=\"%H\" -n 1` | grep .php)"
-  },
   "autoload": {
     "psr-4": {
       "App\\": "src"

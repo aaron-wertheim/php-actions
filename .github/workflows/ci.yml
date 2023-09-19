@@ -1,5 +1,5 @@
-name: CI
-
+name: PHPUnit
+run-name: PHPUnit
 on: [push]
 
 jobs:
