@@ -32,8 +32,10 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
 
-    - name: PHP Code Sniffer
-      run: phpcs $(git diff-tree --no-commit-id --name-only -r `git log --format="%H" -n 1` | grep .php)
-      continue-on-error: true
+    - name: Code Sniffer
+      uses: php-actions/phpcs@v1
+
+#      run: phpcs $(git diff-tree --no-commit-id --name-only -r `git log --format="%H" -n 1` | grep .php)
+#      continue-on-error: true
 
 
