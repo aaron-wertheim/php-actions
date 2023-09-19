@@ -7,8 +7,6 @@ class Greeter
 		if($name) {
 			return "Hello, $name!";
 		}
-
-
 		return "Hello!";
 	}
 }

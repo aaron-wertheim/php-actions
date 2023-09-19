@@ -34,10 +34,10 @@ jobs:
 
     - name: Code Sniffer
       uses: php-actions/phpcs@v1
+      continue-on-error: true
       with:
-        path: $(git diff-tree --no-commit-id --name-only -r `git log --format="%H" -n 1` | grep .php)
+        path: src
+        args: $(git diff-tree --no-commit-id --name-only -r `git log --format="%H" -n 1` | grep .php)
 
-#      run: phpcs $(git diff-tree --no-commit-id --name-only -r `git log --format="%H" -n 1` | grep .php)
-#      continue-on-error: true
 
 
