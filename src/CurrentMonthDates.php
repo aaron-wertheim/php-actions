@@ -13,4 +13,5 @@ class CurrentMonthDates {
             'end_date' => $end_date
         ];
     }
+
 }
