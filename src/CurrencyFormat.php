@@ -24,5 +24,4 @@ class CurrencyFormat {
 
         return sprintf($format, $amount_string);
     } //currency_format
-
 }
