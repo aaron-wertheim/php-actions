@@ -2,7 +2,7 @@
 <phpunit>
     <testsuites>
         <testsuite name="main">
-            <directory>test</directory>
+            <directory>.</directory>
         </testsuite>
     </testsuites>
 </phpunit>
