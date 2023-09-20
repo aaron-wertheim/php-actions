@@ -1,10 +1,7 @@
 <?php
 require __DIR__ . "/../src/Greeter.php";
 
-use App\Greeter;
-
-class GreeterTest extends \PHPUnit\Framework\TestCase {
-
+class GreeterTest extends PHPUnit\Framework\TestCase {
 
 	public function testGreeterSaysHello() {
 		$greeter = new Greeter();
