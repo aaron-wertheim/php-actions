@@ -1,6 +1,6 @@
 <?php
 //require __DIR__ . "/../src/Greeter.php";
-use App\Greeter;
+use Greeter;
 
 class GreeterTest extends PHPUnit\Framework\TestCase {
 
