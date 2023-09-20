@@ -1,4 +1,5 @@
 <?php
+
 class Greeter
 {
     public function greet(string $name = null):string

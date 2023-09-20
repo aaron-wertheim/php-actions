@@ -2,7 +2,7 @@
   "name": "php-actions/example-phpunit",
   "description": "Example project using php-actions/phpunit",
 
-  "require-dev": {
+  "require": {
     "phpunit/phpunit": "9.*"
   },
   "autoload": {
