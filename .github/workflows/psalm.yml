@@ -13,7 +13,7 @@ jobs:
       - name: Psalm Github Actions
         uses: docker://ghcr.io/psalm/psalm-github-actions
         with:
-          relative_dir: ../../github/workflows
+          relative_dir: ../../.github/workflows
 #
 #      - name: Import Security Analysis results into GitHub Security Code Scanning
 #        uses: github/codeql-action/upload-sarif@v2
