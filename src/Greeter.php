@@ -8,7 +8,6 @@ class Greeter
             return "Hello, $name!";
         }
         return "Hello!";
-
     }
 
 
