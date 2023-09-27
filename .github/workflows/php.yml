@@ -16,7 +16,7 @@ jobs:
               - 'src/**'
 
       - name: phpcs
-        if: steps.changes.outputs.src == 'true'
+        if: steps.changes.outputs.src == 'false'
         run: echo steps.changes.outputs.modified
 
 #jobs:

@@ -3,6 +3,7 @@ require __DIR__ . "/../src/CurrencyFormat.php";
 
 use App\CurrencyFormat;
 class CurrencyFormatTest extends \PHPUnit\Framework\TestCase {
+
     public function testCurrencyFormat() {
         $currency_format = new CurrencyFormat();
         self::assertEquals(
