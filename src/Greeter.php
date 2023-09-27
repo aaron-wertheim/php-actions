@@ -1,7 +1,6 @@
 <?php
 //namespace App;
-class Greeter
-{
+class Greeter {
     public function greet(string $name = null):string
     {
         if($name) {
@@ -9,5 +8,4 @@ class Greeter
         }
         return "Hello!";
     }
-
 }
