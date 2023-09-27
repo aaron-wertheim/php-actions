@@ -1,7 +1,7 @@
 name: Code Sniffer
 run-name: Code Sniffer
 
-on: [pull_request]
+on: [push]
 
 permissions:
   contents: read
@@ -32,7 +32,7 @@ jobs:
     - name: Code Sniffer
       uses: php-actions/phpcs@v1
       with:
-        path: src
+        path: git diff
 
 
 
