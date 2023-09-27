@@ -15,11 +15,13 @@ jobs:
             src:
               - 'src/**'
 
-      - name: src deploy
+      - name: phpcs
         if: steps.changes.outputs.src == 'true'
         uses: php-actions/phpcs@v1
         with:
-          path: steps.changes
+          filters: |
+            src:
+              - 'src/**'
 
 #jobs:
 #  changes:
