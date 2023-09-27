@@ -17,7 +17,7 @@ jobs:
 
       - name: phpcs
         if: steps.changes.outputs.src == 'true'
-        run: echo "${{steps.changes.outputs}}"
+        run: print_r(${{steps.changes.outputs}})
 
 #jobs:
 #  changes:
