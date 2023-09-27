@@ -21,4 +21,5 @@ class CurrencyFormatTest extends \PHPUnit\Framework\TestCase {
             $currency_format->get_currency_format(20.00000, false)
         );
     }
+
 }
