@@ -1,14 +1,13 @@
 name: Code Sniffer
 run-name: Code Sniffer
-on:
-  push:
-    branches: [ "main" ]
+
+on: [pull_request]
 
 permissions:
   contents: read
 
 jobs:
-  build:
+  run-code-sniffer:
 
     runs-on: ubuntu-latest
 
