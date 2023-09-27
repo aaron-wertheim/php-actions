@@ -8,5 +8,4 @@ class Greeter {
         }
         return "Hello!";
     }
-
 }

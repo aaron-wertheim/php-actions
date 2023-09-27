@@ -19,7 +19,7 @@ jobs:
         if: steps.changes.outputs.src == 'true'
         uses: php-actions/phpcs@v1
         with:
-          path: src
+          path: steps.changes
 
 #jobs:
 #  changes:
