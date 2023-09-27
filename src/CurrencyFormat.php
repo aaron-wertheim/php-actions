@@ -17,7 +17,7 @@ class CurrencyFormat
         $amount_string = number_format($amount);
 
         if ($negative) {
-            $format = '(%s)';
+            $format = '-%s';
         } else if ($show_plus) {
             $format = '+%s';
         } else {

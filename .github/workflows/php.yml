@@ -34,7 +34,6 @@ jobs:
 
     - name: Code Sniffer
       uses: php-actions/phpcs@v1
-      continue-on-error: true
       with:
         path: src
 
