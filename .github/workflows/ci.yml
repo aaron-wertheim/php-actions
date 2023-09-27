@@ -1,6 +1,6 @@
 name: PHPUnit
 run-name: PHPUnit
-on: [pull_request, pull_request_review]
+on: [push]
 
 jobs:
   build-test:
