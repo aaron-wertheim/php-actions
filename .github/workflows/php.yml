@@ -1,5 +1,6 @@
 name: Code Sniffer
 run-name: Code Sniffer
+
 on: [pull_request]
 
 permissions:
