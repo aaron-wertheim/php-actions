@@ -17,7 +17,7 @@ jobs:
 
       - name: phpcs
         if: steps.changes.outputs.src == 'true'
-        run: echo "${{steps.changes.outputs.modified}}"
+        run: echo ${{steps.changes.outputs.modified}}
 
 #jobs:
 #  changes:
