@@ -17,11 +17,7 @@ jobs:
 
       - name: phpcs
         if: steps.changes.outputs.src == 'true'
-        uses: php-actions/phpcs@v1
-        with:
-          filters: |
-            src:
-              - 'src/**'
+        run: echo "${{steps.changes.outputs.modified}}"
 
 #jobs:
 #  changes:
