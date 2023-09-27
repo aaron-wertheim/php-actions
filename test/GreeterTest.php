@@ -11,7 +11,6 @@ class GreeterTest extends PHPUnit\Framework\TestCase {
 			$greeter->greet()
 		);
 	}
-
 	public function testGreeterUsesName() {
 		$greeter = new Greeter();
 
