@@ -27,9 +27,7 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       - name: Code Sniffer
-        uses: php-actions/phpcs@v1
-        with:
-          path: ${{git diff --name-only}}
+        run: phpcs $(git diff --name-only)
 
 #jobs:
 #  phpcs:
