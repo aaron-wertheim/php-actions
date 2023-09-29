@@ -1,6 +1,6 @@
 name: PHPUnit
 run-name: PHPUnit
-on: [push]
+on: [push pull-request]
 
 jobs:
   run-PHPUnit:
@@ -11,13 +11,10 @@ jobs:
 
       - uses: php-actions/composer@v6
 
-#      - name: PHPUnit Tests
-#        run: |
-#          echo "${{github.event.before}} ${{github.event.after}}"
-
-      - name: Get changed files using defaults
+      - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v32
-      - name: List all added files
+
+      - name: Run PHPUnit on all added files
         run: |
           phpunit ${{ steps.changed-files.outputs. modified_files }}
