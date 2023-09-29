@@ -13,4 +13,4 @@ jobs:
 
       - name: PHPUnit Tests
         run: | 
-          echo "${{github.event.after}} ${{github.event.after}}"
+          echo "${{github.event.before}} ${{github.event.after}}"
