@@ -1,6 +1,6 @@
 name: PHPUnit
 run-name: PHPUnit
-on: [pull_request]
+on: [push]
 
 jobs:
   run-PHPUnit:
@@ -14,4 +14,4 @@ jobs:
       - name: PHPUnit Tests
         uses: php-actions/phpunit@master
         with:
-          configuration: test/phpunit.xml
+          configuration: src/phpunit.xml
