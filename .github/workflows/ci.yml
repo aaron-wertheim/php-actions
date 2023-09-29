@@ -11,6 +11,9 @@ jobs:
         with:
           fetch-depth: 2
 
+      - uses: php-actions/composer@v6
+
+
       - name: Get all src files that have changed
         id: changed-files-yaml
         uses: tj-actions/changed-files@v39
@@ -19,11 +22,10 @@ jobs:
             src:
               - src/**
 
-      - name: Run step if src file(s) change
+      - name: Run PHPUnit on changed src file(s)
         if: steps.changed-files-yaml.outputs.src_any_changed == 'true'
         run: |
-          echo "One or more test file(s) has changed."
-          echo "List all the files that have changed: ${{ steps.changed-files-yaml.outputs.src_all_changed_files }}"
+          phpunit ${{ steps.changed-files-yaml.outputs.src_all_changed_files }}
 
 
 
