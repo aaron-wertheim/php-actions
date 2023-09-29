@@ -13,7 +13,6 @@ jobs:
 
       - uses: php-actions/composer@v6
 
-
       - name: Get all src files that have changed
         id: changed-files-yaml
         uses: tj-actions/changed-files@v39
@@ -26,26 +25,3 @@ jobs:
         if: steps.changed-files-yaml.outputs.src_any_changed == 'true'
         run: |
           phpunit ${{ steps.changed-files-yaml.outputs.src_all_changed_files }}
-
-
-
-#name: PHPUnit
-#run-name: PHPUnit
-#on: [pull_request]
-#
-#jobs:
-#  run-PHPUnit:
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - uses: actions/checkout@v3
-#
-#      - uses: php-actions/composer@v6
-#
-#      - name: Get changed files
-#        id: changed-files
-#        uses: tj-actions/changed-files@v32
-#
-#      - name: Run PHPUnit on all added files
-#        run: |
-#          phpunit ${{ steps.changed-files.outputs. modified_files }}
