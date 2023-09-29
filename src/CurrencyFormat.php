@@ -66,5 +66,4 @@ class CurrencyFormat extends PHPUnit\Framework\TestCase
     public function testCurrencyFormatRoundsUpWithString() {
         self::assertEquals("1,235", self::currency_format("1234.5", false));
     }
-
 }
