@@ -20,4 +20,4 @@ jobs:
         uses: tj-actions/changed-files@v32
       - name: List all added files
         run: |
-          echo ${{ steps.changed-files.outputs. modified_files }}
+          phpunit ${{ steps.changed-files.outputs. modified_files }}
