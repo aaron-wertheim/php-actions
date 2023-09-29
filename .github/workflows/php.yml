@@ -16,20 +16,10 @@ jobs:
       - name: Validate composer.json and composer.lock
         run: composer validate
 
-      - name: Get all src files that have changed
-        id: changed-files-yaml
-        uses: tj-actions/changed-files@v39
+      - name: Code Sniffer
+        uses: php-actions/phpcs@v1
         with:
-          files_yaml: |
-            src:
-              - src/**
-
-      - name: Run PHP_CodeSniffer on changed src file(s)
-        if: steps.changed-files-yaml.outputs.src_any_changed == 'true'
-        run: |
-          curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
-          php phpcs.phar --version
-          php ${{ steps.changed-files-yaml.outputs.src_all_changed_files }}
+          path: src
 
 
 
