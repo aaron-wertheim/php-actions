@@ -12,7 +12,5 @@ jobs:
       - uses: php-actions/composer@v6
 
       - name: PHPUnit Tests
-        uses: php-actions/phpunit@master
-        with:
-          configuration: src/phpunit.xml
-          test_suffix: .php
+        run: | 
+          phpunit src/*
