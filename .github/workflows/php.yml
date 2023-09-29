@@ -27,7 +27,7 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       - name: Code Sniffer
-        run: phpcs $(git diff --name-only)
+        run: phpcs src/Greeter.php
 
 #jobs:
 #  phpcs:
