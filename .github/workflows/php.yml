@@ -15,9 +15,6 @@ jobs:
         run: composer validate
 
       - name: Code Sniffer
-        run: phpcs src/Greeter.php
-
-      - name: Code Sniffer
         uses: php-actions/phpcs@v1
         with:
           path: src
