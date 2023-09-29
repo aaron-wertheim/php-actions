@@ -1,6 +1,6 @@
 name: PHPUnit
 run-name: PHPUnit
-on: [pull_request]
+on: [push, pull_request]
 
 jobs:
   run-PHPUnit:
@@ -11,7 +11,10 @@ jobs:
 
       - uses: php-actions/composer@v6
 
-      - name: PHPUnit Tests
-        uses: php-actions/phpunit@master
-        with:
-          configuration: test/phpunit.xml
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v32
+
+      - name: Run PHPUnit on all added files
+        run: |
+          phpunit ${{ steps.changed-files.outputs. modified_files }}
