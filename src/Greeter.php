@@ -27,5 +27,4 @@ class Greeter extends PHPUnit\Framework\TestCase
             $this->greet("Sarah")
         );
     }
-
 }

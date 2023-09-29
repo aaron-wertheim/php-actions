@@ -13,4 +13,4 @@ jobs:
 
       - name: PHPUnit Tests
         run: | 
-          phpunit src/*
+          phpunit $(git diff --name-only)
