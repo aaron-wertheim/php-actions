@@ -21,12 +21,10 @@ jobs:
             src:
               - src/**
 
-      - name: Scan changed files for missing semicolon
+      - name: List Changed files
+        if: steps.changed-files-yaml.outputs.src_any_changed == 'true'
         run: | 
-          for file in ${{ steps.changed-files-yaml.outputs.src_all_changed_files }}; do
-            echo "::error file=$file,line=9::Missing semicolon"
-          done
-
+          echo "Changed files: ${{ steps.changed-files-yaml.outputs.src_all_changed_files }}"
 
 
 
