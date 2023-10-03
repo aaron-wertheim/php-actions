@@ -1,10 +1,10 @@
-name: Code Sniffer
-run-name: Code Sniffer
+name: Changed Files
+run-name: Scan Changed Files
 
 on: [pull_request]
 
 jobs:
-  run-code-sniffer:
+  run-scan:
 
     runs-on: ubuntu-latest
 
@@ -21,9 +21,10 @@ jobs:
             src:
               - src/**
 
-      - name: List Changed files
+      - name: Scan changed files for missing semicolon
         run: | 
-          echo "Changed files: ${{ steps.changed-files-yaml.outputs.src_all_changed_files }}"
+          echo "::warning file=${{ steps.changed-files-yaml.outputs.src_all_changed_files }},line=1::Missing semicolon"
+
 
 
 
