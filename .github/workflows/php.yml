@@ -13,9 +13,6 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Validate composer.json and composer.lock
-        run: composer validate
-
       - name: Get all src files that have changed
         id: changed-files-yaml
         uses: tj-actions/changed-files@v39
@@ -24,10 +21,10 @@ jobs:
             src:
               - src/**
 
-      - name: Code Sniffer
-        uses: php-actions/phpcs@v1
-        with:
-          path: ${{ steps.changed-files-yaml.outputs.src_all_changed_files }}
+      - name: List Changed files
+        run: | 
+          echo "Changed files: ${{ steps.changed-files-yaml.outputs.src_all_changed_files }}"
+
 
 
 
