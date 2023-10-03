@@ -23,7 +23,8 @@ jobs:
 
       - name: Scan changed files for missing semicolon
         run: | 
-          echo "::warning file=${{ steps.changed-files-yaml.outputs.src_all_changed_files }},line=1::Missing semicolon"
+          for file in ${{ steps.changed-files-yaml.outputs.src_all_changed_files }}; do
+          echo "::warning file=$file,line=1::Missing semicolon"
 
 
 
