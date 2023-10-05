@@ -24,7 +24,7 @@ jobs:
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-             echo "$file: $(grep -Rilnw $file -e 'function')"
+             echo "$file: $(grep -Rinw $file -e 'function')"
           done
 
 
