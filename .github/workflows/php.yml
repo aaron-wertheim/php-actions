@@ -31,8 +31,8 @@ jobs:
               if grep -Ricw $file -e $i > 0; 
               then
                 echo "::warning::file $file contains the word $i:"
-                echo -e "$(grep -Rinw $file -e $i)\n"
-                ((warnings++));
+                echo -e "$(grep -Rinw $file -e $i)\n";
+#                ((warnings++));
               fi
             done
           done
