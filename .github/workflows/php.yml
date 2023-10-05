@@ -24,7 +24,7 @@ jobs:
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-             if $(grep -Ricw $file -e 'self') > 0; 
+             if [grep -Ricw $file -e 'self' > 0]; 
              then
                 echo "::warning file=$file::$file contains the word 'self':"
                 echo -e "$(grep -Rinw $file -e 'self')\n";
