@@ -23,8 +23,8 @@ jobs:
       - name: Check changed src files for certain strings
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
-          strings = ("self" "sprintf" "string")
-          warnings = 0
+          strings=("self" "sprintf" "string")
+          warnings=0
 
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             for i in "${strings[@]}"; do
