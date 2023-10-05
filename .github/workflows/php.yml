@@ -24,7 +24,7 @@ jobs:
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-             echo $(grep -Rinw $file -e 'sprintf')
+             echo "$(grep -Rinw $file -e 'sprintf')"
           done
 
 
