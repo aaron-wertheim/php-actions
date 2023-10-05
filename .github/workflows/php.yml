@@ -21,7 +21,7 @@ jobs:
             src/**
 
       - name: Check Changed src files for text 'sprintf'
-        if: steps.changed-files-yaml.outputs.any_changed == 'true'
+        if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
              echo $(grep -Rinw $file -e 'sprintf')
