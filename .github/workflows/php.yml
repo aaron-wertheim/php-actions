@@ -24,7 +24,6 @@ jobs:
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           strings=("self" "sprintf" "string")
-          warnings=0
 
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             for i in "${strings[@]}"; do
@@ -32,16 +31,9 @@ jobs:
               then
                 echo "::warning::file $file contains the word $i:"
                 echo -e "$(grep -Rinw $file -e $i)\n";
-#                ((warnings++));
               fi
             done
           done
-          
-#          if $warnings > 0; then
-#            echo "There were $warnings warnings"
-#            exit 1;
-#          fi
-            
 
 
 
