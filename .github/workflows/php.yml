@@ -17,14 +17,15 @@ jobs:
         id: changed-files-yaml
         uses: tj-actions/changed-files@v39
         with:
-          files_yaml: |
-            src:
-              - src/**
+          files: |
+            src/**
 
-      - name: List Changed files
+      - name: Check Changed src files for text 'sprintf'
         if: steps.changed-files-yaml.outputs.src_any_changed == 'true'
-        run: | 
-          echo "Changed files: ${{ steps.changed-files-yaml.outputs.src_all_changed_files }}"
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+             echo $(grep -Rinw $file -e 'sprintf')
+          done
 
 
 
