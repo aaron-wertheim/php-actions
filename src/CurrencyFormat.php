@@ -1,6 +1,8 @@
 <?php
 class CurrencyFormat extends PHPUnit\Framework\TestCase
 {
+
+
     public function currency_format($amount, $show_plus = true): string
     {
         $negative = false;
