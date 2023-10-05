@@ -37,10 +37,10 @@ jobs:
             done
           done
           
-          if $warnings > 0; do
+          if $warnings > 0; then
             echo "There were $warnings warnings"
             exit 1;
-          done
+          fi
             
 
 
