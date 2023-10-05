@@ -23,17 +23,25 @@ jobs:
       - name: Check changed src files for certain strings
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
-          strings=("self" "sprintf" "string")
+          strings = ("self" "sprintf" "string")
+          warnings = 0
 
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             for i in "${strings[@]}"; do
               if grep -Ricw $file -e $i > 0; 
               then
-                echo "::error::file $file contains the word $i:"
-                echo -e "$(grep -Rinw $file -e $i)\n";
+                echo "::warning::file $file contains the word $i:"
+                echo -e "$(grep -Rinw $file -e $i)\n"
+                $warnings++;
               fi
             done
           done
+          
+          if $warnings > 0; do
+            echo "There were $warnings warnings"
+            exit 1;
+          done
+            
 
 
 
