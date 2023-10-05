@@ -29,7 +29,7 @@ jobs:
             for i in "${strings[@]}"; do
               if grep -Ricw $file -e $i > 0; 
               then
-                echo "::warning file=$file::$file contains the word $i:"
+                echo "::warning::file $file contains the word $i:"
                 echo -e "$(grep -Rinw $file -e $i)\n";
               fi
             done
