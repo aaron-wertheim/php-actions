@@ -20,11 +20,11 @@ jobs:
           files: |
             src/**
 
-      - name: Check Changed src files for text 'sprintf'
+      - name: Check Changed src files for text 'function'
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-             echo "$file: $(grep -Rinw $file -e 'sprintf')"
+             echo "$file: $(grep -Rilnw $file -e 'function')"
           done
 
 
