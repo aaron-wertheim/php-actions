@@ -26,7 +26,7 @@ jobs:
           strings=("self" "sprintf" "string")
 
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            for i in $strings; do
+            for i in "${strings[@]}"; do
               if grep -Ricw $file -e $i > 0; 
               then
                 echo "::warning file=$file::$file contains the word $i:"
