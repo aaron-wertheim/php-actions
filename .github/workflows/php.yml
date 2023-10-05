@@ -23,12 +23,15 @@ jobs:
       - name: Check Changed src files for the word 'self'
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
+          declare -a strings=("self" "sprintf" "string")
+
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-             if grep -Ricw $file -e 'self' > 0; 
-             then
-                echo "::warning file=$file::$file contains the word 'self':"
-                echo -e "$(grep -Rinw $file -e 'self')\n";
-             fi
+            for i in "{strings[@]}"; do
+              if grep -Ricw $file -e $i > 0; 
+              then
+                echo "::warning file=$file::$file contains the word $i:"
+                echo -e "$(grep -Rinw $file -e $i)\n";
+              fi
           done
 
 
