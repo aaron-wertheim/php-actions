@@ -20,7 +20,7 @@ jobs:
           files: |
             src/**
 
-      - name: Check Changed src files for the word 'self'
+      - name: Check changed src files for certain strings
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           strings=("self" "sprintf" "string")
