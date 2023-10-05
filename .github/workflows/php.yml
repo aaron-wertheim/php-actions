@@ -32,7 +32,7 @@ jobs:
               then
                 echo "::warning::file $file contains the word $i:"
                 echo -e "$(grep -Rinw $file -e $i)\n"
-                $warnings++;
+                ((warnings++));
               fi
             done
           done
