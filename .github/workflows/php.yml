@@ -20,11 +20,16 @@ jobs:
           files: |
             src/**
 
-      - name: Check Changed src files for text 'function'
+      - name: Check Changed src files for the word 'self'
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-             echo "$file: $(grep -Rinw $file -e 'function')"
+             if grep -Ricw $file -e 'self' > 0; 
+             then 
+                echo $(grep -Rinw $file -e 'self');
+             else
+                echo $file does not contain the word 'self';
+             fi
           done
 
 
