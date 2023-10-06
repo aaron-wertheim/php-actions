@@ -38,7 +38,7 @@ jobs:
           done
           
           echo "Total Warnings: $warnings"
-          if echo "$warnings" > 5;
+          if $($warnings) > 5;
           then
             exit 1;
           fi
