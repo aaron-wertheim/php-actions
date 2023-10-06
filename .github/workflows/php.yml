@@ -32,14 +32,14 @@ jobs:
               then
                 echo "::warning::file $file contains the word $i:"
                 echo -e "$(grep -Rinw $file -e $i)\n"
-                warnings=$(($warnings+1))
+                warnings=$(($warnings+1));
               fi
             done
           done
           
-          echo "Total Warnings: $warnings"
-          if ((warnings > 4));
+          if ((warnings > 0));
           then
+            echo "Total Warnings: $warnings"
             exit 1;
           fi
 
