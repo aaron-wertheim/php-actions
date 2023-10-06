@@ -1,6 +1,8 @@
 <?php
 class CurrencyFormat extends PHPUnit\Framework\TestCase
 {
+
+
     public function currency_format($amount, $show_plus = true): string
     {
         $negative = false;
@@ -66,8 +68,5 @@ class CurrencyFormat extends PHPUnit\Framework\TestCase
     public function testCurrencyFormatRoundsUpWithString() {
         self::assertEquals("1,235", self::currency_format("1234.5", false));
     }
-
-
-
 
 }
