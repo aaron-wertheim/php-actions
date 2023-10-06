@@ -38,6 +38,10 @@ jobs:
           done
           
           echo "Total Warnings: $warnings"
+          if $warning > 0;
+          then
+            exit 1;
+          fi
 
 
 
