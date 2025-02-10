@@ -1,6 +1,6 @@
 // script.js
 
-fetch('greeter.php', {
+fetch('greeting.php', {
     method: 'GET',  // or 'POST' depending on your PHP script requirements
 })
     .then(response => response.text())  // Assuming the PHP script returns plain text
