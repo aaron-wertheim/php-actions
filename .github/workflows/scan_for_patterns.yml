@@ -24,20 +24,35 @@ jobs:
         run: |
           echo "🔍 Scanning for suspicious patterns in changed files..."
 
-          blocked_patterns=(
+          # Define patterns and labels
+          patterns=(
             "\.dev"
-            "$_REQUEST\[\s*['\"][^'\"]+['\"]\s*\]\s*="
+            "\$_REQUEST\[\s*['\"][^'\"]+['\"]\s*\]\s*="
+          )
+          labels=(
+            ".dev usage"
+            "\$_REQUEST[*] ="
           )
 
           found_issues=0
 
           for file in $CHANGED_FILES; do
+            if [[ "$file" == .github/workflows/* ]]; then
+            continue
+            fi
+          
             if [[ -f "$file" ]]; then
-              for pattern in "${blocked_patterns[@]}"; do
-                if grep -En "$pattern" "$file"; then
-                  echo "❌ Found forbidden pattern '$pattern' in file $file"
+              for i in "${!patterns[@]}"; do
+                pattern="${patterns[$i]}"
+                label="${labels[$i]}"
+                echo "::group::Pattern '$label' matches in $file"
+                grep_output=$(grep -En "$pattern" "$file" | grep -vE '^\s*//')
+                if [[ -n "$grep_output" ]]; then
+                  echo "❌ Found forbidden pattern '$label' in file $file"
+                  echo "$grep_output"
                   found_issues=1
                 fi
+                echo "::endgroup::"
               done
             fi
           done
@@ -48,3 +63,4 @@ jobs:
           else
             echo "✅ No suspicious patterns found."
           fi
+      
