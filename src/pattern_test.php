@@ -9,6 +9,7 @@ $api_url = "https://my-api.dev/endpoint";
 $_REQUEST['username'] = $_POST['username'];
 $_REQUEST['password'] = '1234';
 
+
 // Should NOT trigger (safe usage)
 $user_input = $_REQUEST['input'] ?? null;
 
