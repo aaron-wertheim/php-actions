@@ -27,7 +27,7 @@ jobs:
           # Define patterns and labels
           patterns=(
             "\.dev"
-            "\$_REQUEST\[\s*['\"][^'\"]+['\"]\s*\]\s*="
+            "$_REQUEST\[\s*['\"][^'\"]+['\"]\s*\]\s*="
           )
           labels=(
             ".dev usage"
@@ -45,14 +45,13 @@ jobs:
               for i in "${!patterns[@]}"; do
                 pattern="${patterns[$i]}"
                 label="${labels[$i]}"
-                echo "::group::Pattern '$label' matches in $file"
                 grep_output=$(grep -En "$pattern" "$file" | grep -vE '^\s*//')
                 if [[ -n "$grep_output" ]]; then
-                  echo "❌ Found forbidden pattern '$label' in file $file"
+                  echo "::group::❌ Found forbidden pattern '$label' in file $file"
                   echo "$grep_output"
                   found_issues=1
+                  echo "::endgroup::"
                 fi
-                echo "::endgroup::"
               done
             fi
           done
