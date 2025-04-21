@@ -1,0 +1,50 @@
+name: Scan for suspicious patterns
+
+on:
+  push:
+    branches:
+      - '**' 
+
+jobs:
+  scan-files:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get list of changed files
+        id: changes
+        run: |
+          echo "CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD | tr '\n' ' ')" >> $GITHUB_ENV
+
+      - name: Scan for suspicious patterns
+        run: |
+          echo "🔍 Scanning for suspicious patterns in changed files..."
+
+          blocked_patterns=(
+            "\.dev"
+            "\$_REQUEST\[[^\]]+\]\s*="
+          )
+
+          found_issues=0
+
+          for file in $CHANGED_FILES; do
+            if [[ -f "$file" ]]; then
+              for pattern in "${blocked_patterns[@]}"; do
+                if grep -En "$pattern" "$file"; then
+                  echo "❌ Found forbidden pattern '$pattern' in file $file"
+                  found_issues=1
+                fi
+              done
+            fi
+          done
+
+          if [[ $found_issues -eq 1 ]]; then
+            echo "🚫 Suspicious patterns detected. Please fix before committing."
+            exit 1
+          else
+            echo "✅ No suspicious patterns found."
+          fi
