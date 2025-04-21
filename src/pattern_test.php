@@ -5,6 +5,7 @@
 // Should trigger: .dev string
 $api_url = "https://my-api.dev/endpoint";
 
+
 // Should trigger: assignment to $_REQUEST
 $_REQUEST['username'] = $_POST['username'];
 $_REQUEST['password'] = '1234';
