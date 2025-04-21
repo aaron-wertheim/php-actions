@@ -26,7 +26,7 @@ jobs:
 
           blocked_patterns=(
             "\.dev"
-            "\$_REQUEST\[[^\]]+\]\s*="
+            "$_REQUEST\[\s*['\"][^'\"]+['\"]\s*\]\s*="
           )
 
           found_issues=0
