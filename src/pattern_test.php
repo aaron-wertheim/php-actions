@@ -39,7 +39,6 @@ if($_REQUEST['password'] == '1234') {
     echo "Password is correct";
 };
 
-
 // Just a normal line
 echo "Hello, world!";
 
