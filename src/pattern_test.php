@@ -25,6 +25,7 @@ echo "Page: ".$_GET['page'];
 echo 'Page: ' . $_GET['page'];
 echo 'Page: '.$_GET['page'];
 
+
 // Should trigger: string concat with $_POST
 echo "Form: " . $_POST['form'];
 echo "Form: ".$_POST['form'];
