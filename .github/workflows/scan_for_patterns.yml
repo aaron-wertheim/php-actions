@@ -29,12 +29,12 @@ jobs:
             "\.dev"
             "$_REQUEST\[\s*['\"][^'\"]+['\"]\s*\]\s*="
             "(string)\s*$_REQUEST"
-            "\"\s*\.\s*$_REQUEST"
-            "'\s*\.\s*$_REQUEST"
-            "\"\s*\.\s*$_GET"
-            "'\s*\.\s*$_GET"
-            "\"\s*\.\s*$_POST"
-            "'\s*\.\s*$_POST"
+            "\"\s*\.\s*\$_REQUEST"
+            "'\s*\.\s*\$_REQUEST"
+            "\"\s*\.\s*\$_GET"
+            "'\s*\.\s*\$_GET"
+            "\"\s*\.\s*\$_POST"
+            "'\s*\.\s*\$_POST"
           )
           labels=(
             "Dev branch usage"
@@ -53,6 +53,12 @@ jobs:
           for file in $CHANGED_FILES; do
             if [[ "$file" == .github/workflows/* ]]; then
               continue
+            fi
+          
+            if [[ "$label" == *"String concat"* ]]; then
+              grep_output=$(awk '!/^\s*\/\//' "$file" | grep -n "$pattern")
+            else
+              grep_output=$(awk '!/^\s*\/\//' "$file" | grep -En "$pattern")
             fi
 
             if [[ -f "$file" ]]; then
