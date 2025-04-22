@@ -29,12 +29,12 @@ jobs:
             "\.dev"
             "$_REQUEST\[\s*['\"][^'\"]+['\"]\s*\]\s*="
             "(string)\s*$_REQUEST"
-            "\"\s*\.\s*\$_REQUEST"
-            "'\s*\.\s*\$_REQUEST"
-            "\"\s*\.\s*\$_GET"
-            "'\s*\.\s*\$_GET"
-            "\"\s*\.\s*\$_POST"
-            "'\s*\.\s*\$_POST"
+            "\"\s*\.\s*$_REQUEST"
+            "'\s*\.\s*$_REQUEST"
+            "\"\s*\.\s*$_GET"
+            "'\s*\.\s*$_GET"
+            "\"\s*\.\s*$_POST"
+            "'\s*\.\s*$_POST"
           )
           labels=(
             "Dev branch usage"
