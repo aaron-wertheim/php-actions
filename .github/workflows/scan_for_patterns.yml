@@ -59,7 +59,7 @@ jobs:
               for i in "${!patterns[@]}"; do
                 pattern="${patterns[$i]}"
                 label="${labels[$i]}"
-                grep_output=$(awk '!/^\s*\/\//' "$file" | grep -n "$pattern")
+                grep_output=$(awk '!/^\s*\/\//' "$file" | grep -n $pattern)
                 if [[ -n "$grep_output" ]]; then
                   echo "::group::❌ Found forbidden pattern '$label' in file $file"
                   echo "$grep_output"
