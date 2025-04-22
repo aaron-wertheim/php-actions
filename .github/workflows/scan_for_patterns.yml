@@ -3,7 +3,7 @@ name: Scan for suspicious patterns
 on:
   push:
     branches:
-      - '**' 
+      - '**'
 
 jobs:
   scan-files:
@@ -27,20 +27,34 @@ jobs:
           # Define patterns and labels
           patterns=(
             "\.dev"
-            "$_REQUEST\[\s*['\"][^'\"]+['\"]\s*\]\s*="
+            "\$_REQUEST\[\s*['\"][^'\"]+['\"]\s*\]\s*="
+            "\(string\)\s*\$_REQUEST"
+            "\"\s*\.\s*\$_REQUEST"
+            "'\s*\.\s*\$_REQUEST"
+            "\"\s*\.\s*\$_GET"
+            "'\s*\.\s*\$_GET"
+            "\"\s*\.\s*\$_POST"
+            "'\s*\.\s*\$_POST"
           )
           labels=(
-            ".dev usage"
-            "\$_REQUEST[*] ="
+            "Dev branch usage"
+            "Assignment to REQUEST variable"
+            "Type casting with REQUEST variable"
+            "String concat with \$_REQUEST (double quotes)"
+            "String concat with \$_REQUEST (single quotes)"
+            "String concat with \$_GET (double quotes)"
+            "String concat with \$_GET (single quotes)"
+            "String concat with \$_POST (double quotes)"
+            "String concat with \$_POST (single quotes)"
           )
 
           found_issues=0
 
           for file in $CHANGED_FILES; do
             if [[ "$file" == .github/workflows/* ]]; then
-            continue
+              continue
             fi
-          
+
             if [[ -f "$file" ]]; then
               for i in "${!patterns[@]}"; do
                 pattern="${patterns[$i]}"
@@ -62,4 +76,3 @@ jobs:
           else
             echo "✅ No suspicious patterns found."
           fi
-      
