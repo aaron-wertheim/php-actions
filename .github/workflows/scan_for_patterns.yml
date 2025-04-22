@@ -54,18 +54,18 @@ jobs:
             if [[ "$file" == .github/workflows/* ]]; then
               continue
             fi
-          
-            if [[ "$label" == *"String concat"* ]]; then
-              grep_output=$(awk '!/^\s*\/\//' "$file" | grep -n "$pattern")
-            else
-              grep_output=$(awk '!/^\s*\/\//' "$file" | grep -En "$pattern")
-            fi
 
             if [[ -f "$file" ]]; then
               for i in "${!patterns[@]}"; do
                 pattern="${patterns[$i]}"
                 label="${labels[$i]}"
-                grep_output=$(awk '!/^\s*\/\//' "$file" | grep -En $pattern)
+          
+                if [[ "$label" == *"String concat"* ]]; then
+                  grep_output=$(awk '!/^\s*\/\//' "$file" | grep -n "$pattern")
+                else
+                  grep_output=$(awk '!/^\s*\/\//' "$file" | grep -En "$pattern")
+                fi
+          
                 if [[ -n "$grep_output" ]]; then
                   echo "::group::❌ Found forbidden pattern '$label' in file $file"
                   echo "$grep_output"
