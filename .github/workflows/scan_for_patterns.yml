@@ -27,7 +27,7 @@ jobs:
           echo "🔍 Scanning for general suspicious patterns in changed files..."
 
           patterns=(
-            '$_REQUEST\[\s*['\"][^'\"]+['\"]\s*\]\s*=[^=]'
+            "\$_REQUEST\[\s*['\"][^'\"]+['\"]\s*\]\s*=[^=]"
             "\(string\)\s*$_REQUEST"
             "SELECT\s+\*"
           )
