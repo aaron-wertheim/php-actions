@@ -23,6 +23,7 @@ jobs:
           echo "CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD | tr '\n' ' ')" >> $GITHUB_ENV
 
       - name: Scan for suspicious patterns
+        continue-on-error: true
         run: |
           echo "🔍 Scanning for suspicious patterns in changed files..."
 
@@ -79,6 +80,7 @@ jobs:
 
           if [[ $found_issues -eq 1 ]]; then
             echo "::warning::⚠️ Suspicious patterns detected. Please review the logs above."
+            exit 1
           else
             echo "✅ No suspicious patterns found."
           fi
