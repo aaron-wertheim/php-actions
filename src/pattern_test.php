@@ -23,6 +23,8 @@ $_REQUEST['password']='1234';
 $user = (string)$_REQUEST['user'];
 $pwd = (string) $_REQUEST['pass'];
 
+
+
 // Should trigger: string concat with $_REQUEST
 echo "User: " . $_REQUEST['username'];
 echo "User: ".$_REQUEST['username'];
