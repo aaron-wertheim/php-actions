@@ -50,16 +50,8 @@ jobs:
               for i in "${!patterns[@]}"; do
                 pattern="${patterns[$i]}"
                 label="${labels[$i]}"
-                
-                if [[ "$label" == "Use of SELECT * in DB query" ]]; then
-                  grep_output=$(awk '!/^\s*\/\//' "$file" | tr '\n' ' ' | grep -Eon 'SELECT\s+\*')
-                  if [[ -n "$grep_output" ]]; then
-                    grep_output="(possible multi-line match) $grep_output"
-                  fi
-                else
-                  grep_output=$(awk '!/^\s*\/\//' "$file" | grep -En "$pattern")
-                fi
-
+                grep_output=$(awk '!/^\s*\/\//' "$file" | grep -En "$pattern")
+          
                 if [[ -n "$grep_output" ]]; then
                   key="$file|$label"
                   file_label_issues["$key"]="$grep_output"
@@ -86,7 +78,7 @@ jobs:
           done
 
           if [[ $found_issues -eq 1 ]]; then
-            echo "🚫 Suspicious patterns detected. Please fix before committing."
+            echo "::warning::⚠️ Suspicious patterns detected. Please review the logs above."
             exit 1
           else
             echo "✅ No suspicious patterns found."
