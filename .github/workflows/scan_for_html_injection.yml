@@ -27,9 +27,9 @@ jobs:
           echo "🔍 Scanning for HTML injection patterns in changed files..."
 
           patterns=(
-            "<\?=\s*\$_REQUEST"
-            "<\?=\s*\$_POST"
-            "<\?=\s*\$_GET"
+            "<?=\s*\$_REQUEST"
+            "<?=\s*\$_POST"
+            "<?=\s*\$_GET"
           )
 
           declare -A file_issues
@@ -43,7 +43,7 @@ jobs:
             if [[ -f "$file" ]]; then
               output=""
               for pattern in "${patterns[@]}"; do
-                grep_output=$(awk '!/^\s*\/\//' "$file" | grep -En "$pattern")
+                grep_output=$(awk '!/^\s*\/\//' "$file" | grep -n "$pattern")
                 if [[ -n "$grep_output" ]]; then
                   output+=$'\n'"$grep_output"
                   found_issues=1
