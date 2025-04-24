@@ -56,3 +56,28 @@ if($_REQUEST['password'] == '1234') {
 // Just a normal line
 echo "Hello, world!";
 
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Pattern Trigger Page</title>
+</head>
+<body>
+<h1>Pattern Test File</h1>
+<p>This file exists solely to trigger and verify GitHub Actions pattern scans.</p>
+
+<!--  These should trigger HTML injection scan -->
+<div>
+    <strong>Username:</strong> <?= $_REQUEST['username'] ?><br>
+    <strong>Email:</strong> <?=    $_POST['email'] ?><br>
+    <strong>Page:</strong> <?=  $_GET['page'] ?><br>
+</div>
+
+<!--  Safe usage example -->
+<div>
+    <strong>Safe Output:</strong> <?= htmlspecialchars($_REQUEST['safe'] ?? '') ?>
+</div>
+</body>
+</html>

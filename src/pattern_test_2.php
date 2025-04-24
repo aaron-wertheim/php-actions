@@ -35,3 +35,29 @@ echo 'Form2: '.$_POST['form'];
 
 // Should NOT trigger: string concat
 echo "Path: " . $path;
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Pattern Trigger Page</title>
+</head>
+<body>
+<h1>Pattern Test File</h1>
+<p>This file exists solely to trigger and verify GitHub Actions pattern scans.</p>
+
+<!--  These should trigger HTML injection scan -->
+<div>
+    <strong>Username2:</strong> <?= $_REQUEST['username2'] ?><br>
+    <strong>Email2:</strong> <?=    $_POST['email2'] ?><br>
+    <strong>Page2:</strong> <?=  $_GET['page2'] ?><br>
+</div>
+
+<!--  Safe usage example -->
+<div>
+    <strong>Safe Output2:</strong> <?= htmlspecialchars($_REQUEST['safe2'] ?? '') ?>
+</div>
+</body>
+</html>
