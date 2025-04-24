@@ -1,0 +1,63 @@
+name: Scan for suspicious patterns
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  scan-files:
+    name: 🔎 Dev Patterns Scanner
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get list of changed files
+        id: changes
+        run: |
+          echo "CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD | tr '\n' ' ')" >> $GITHUB_ENV
+
+      - name: Scan for dev patterns
+        run: |
+          echo "🔍 Scanning for dev patterns in changed files..."
+
+          patterns=(
+            "\.dev\.realtyads\.com"
+            "var/www-dy/"
+            "_dev\."
+          )
+
+          found_issues=0
+
+          for file in $CHANGED_FILES; do
+            if [[ "$file" == .github/workflows/* ]]; then
+              continue
+            fi
+
+            if [[ -f "$file" ]]; then
+              for i in "${!patterns[@]}"; do
+                pattern="${patterns[$i]}"
+          
+                grep_output=$(awk '!/^\s*\/\//' "$file" | grep -En "$pattern")
+          
+                if [[ -n "$grep_output" ]]; then
+                  echo "::group::❌ Found forbidden dev pattern in file $file"
+                  echo "$grep_output"
+                  found_issues=1
+                  echo "::endgroup::"
+                fi
+              done
+            fi
+          done
+
+          if [[ $found_issues -eq 1 ]]; then
+            echo "🚫 Suspicious patterns detected. Please fix before committing."
+            exit 1
+          else
+            echo "✅ No suspicious patterns found."
+          fi
+

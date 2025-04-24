@@ -7,6 +7,7 @@ on:
 
 jobs:
   scan-files:
+    name: 🔎 All Patterns Scanner
     runs-on: ubuntu-latest
 
     steps:
@@ -26,7 +27,6 @@ jobs:
 
           # Define patterns and labels
           patterns=(
-            "\.dev"
             "$_REQUEST\[\s*['\"][^'\"]+['\"]\s*\]\s*=[^=]"
             "(string)\s*$_REQUEST"
             "\"\s*\.\s*\$_REQUEST"
