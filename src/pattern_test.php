@@ -15,8 +15,6 @@ $env = "staging_dev.php";
 $other_env = "staging";
 $backup_path = "/var/www/safe-folder";
 
-
-
 // Should trigger: assignment to $_REQUEST
 $_REQUEST['username'] = $_POST['username'];
 $_REQUEST['password']='1234';
@@ -43,6 +41,8 @@ echo "Form: ".$_POST['form'];
 echo 'Form: ' . $_POST['form'];
 echo 'Form: '.$_POST['form'];
 
+// Should NOT trigger: string concat
+echo "User: " . $user;
 
 // Should NOT trigger (safe usage)
 $user_input = $_REQUEST['input'] ?? null;

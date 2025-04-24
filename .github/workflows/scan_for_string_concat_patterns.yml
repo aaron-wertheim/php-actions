@@ -1,5 +1,5 @@
-name: Scan for dev patterns
-run-name: 🔎 Dev Patterns
+name: Scan for SQL Injection Vulnerabilities
+run-name: 🔎 SQL Injection Vulnerabilities
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   scan-files:
-    name: 🔎 Dev Patterns Scanner
+    name: 🔎 SQL Injection Vulnerabilities Scanner
     runs-on: ubuntu-latest
 
     steps:
@@ -22,14 +22,17 @@ jobs:
         run: |
           echo "CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD | tr '\n' ' ')" >> $GITHUB_ENV
 
-      - name: Scan for dev patterns
+      - name: Scan for SQL injection vulnerabilities
         run: |
-          echo "🔍 Scanning for dev patterns in changed files..."
+          echo "🔍 Scanning for possible SQL vulnerabilities in changed files..."
 
           patterns=(
-            "\.dev\.realtyads\.com"
-            "var/www-dy/"
-            "_dev\."
+            "\"\s*\.\s*\$_REQUEST"
+            "'\s*\.\s*\$_REQUEST"
+            "\"\s*\.\s*\$_GET"
+            "'\s*\.\s*\$_GET"
+            "\"\s*\.\s*\$_POST"
+            "'\s*\.\s*\$_POST"
           )
 
           declare -A file_issues
@@ -43,7 +46,7 @@ jobs:
             if [[ -f "$file" ]]; then
               output=""
               for pattern in "${patterns[@]}"; do
-                grep_output=$(awk '!/^\s*\/\//' "$file" | grep -En "$pattern")
+                grep_output=$(awk '!/^\s*\/\//' "$file" | grep -n "$pattern")
                 if [[ -n "$grep_output" ]]; then
                   output+=$'\n'"$grep_output"
                   found_issues=1
@@ -57,7 +60,7 @@ jobs:
           done
 
           for file in "${!file_issues[@]}"; do
-            echo "::group::❌ Found forbidden dev pattern(s) in file $file"
+            echo "::group::❌ Found possible SQL injection vulnerabilities in file $file"
             echo "${file_issues[$file]}"
             echo "::endgroup::"
           done
@@ -68,5 +71,3 @@ jobs:
           else
             echo "✅ No suspicious patterns found."
           fi
-      
-
