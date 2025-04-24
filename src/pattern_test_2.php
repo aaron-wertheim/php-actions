@@ -15,11 +15,14 @@ $env = "staging_2_dev.php";
 $other_env = "staging_2";
 $backup_path = "/var/www/safe-folder-2";
 
-
+// Should trigger: assignment to $_REQUEST
+$_REQUEST['username'] = $_POST['username'];
+$_REQUEST['password']='1234';
 
 // Should trigger: type casting with $_REQUEST
 $user2 = (string)$_REQUEST['user'];
 $pwd2 = (string) $_REQUEST['pass'];
+
 
 // Should NOT trigger: type casting with $_REQUEST
 $pwd2 = (string) $pwd2;

@@ -26,7 +26,6 @@ jobs:
         run: |
           echo "🔍 Scanning for suspicious patterns in changed files..."
 
-          # Define patterns and labels
           patterns=(
             '\$_REQUEST\[\s*["'\''][^"'\''"]+["'\'']\s*\]\s*=[^=]'
             '\(string\)\s*\$_REQUEST'
