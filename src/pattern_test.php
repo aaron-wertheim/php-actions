@@ -67,7 +67,6 @@ $good_query = "SELECT id FROM realty_users WHERE id = " . $user;
 // Just a normal line
 echo "Hello, world!";
 
-
 ?>
 
 

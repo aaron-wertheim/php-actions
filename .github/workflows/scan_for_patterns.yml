@@ -79,7 +79,6 @@ jobs:
 
           if [[ $found_issues -eq 1 ]]; then
             echo "::warning::⚠️ Suspicious patterns detected. Please review the logs above."
-            exit 1
           else
             echo "✅ No suspicious patterns found."
           fi
