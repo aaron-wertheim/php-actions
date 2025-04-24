@@ -54,6 +54,10 @@ if($_REQUEST['password'] == '1234') {
 
 // Should trigger: SELECT * and string concat with $_GET
 $query = "SELECT * FROM realty_users WHERE id = " . $_GET['id'];
+$query_multi = "SELECT
+*
+FROM realty_users
+WHERE id = " . $_REQUEST['id'];
 
 // Should NOT trigger: SELECT *
 $good_query = "SELECT id FROM realty_users WHERE id = " . $user;

@@ -46,6 +46,12 @@ echo "Path: " . $path;
 // Should trigger: SELECT * and string concat with $_GET
 $query2 = "SELECT * FROM realty_users WHERE id = " . $_GET['id'];
 
+//// Should NOT trigger: SELECT *
+$query_multi = "SELECT
+*
+FROM realty_users
+WHERE id = " . $_REQUEST['id'];
+
 // Should NOT trigger: SELECT *
 $good_query2 = "SELECT id FROM realty_users WHERE id = " . $user2;
 
