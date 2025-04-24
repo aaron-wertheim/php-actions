@@ -29,6 +29,7 @@ jobs:
           patterns=(
             '\$_REQUEST\[\s*["'\''][^"'\''"]+["'\'']\s*\]\s*=[^=]'
             '\(string\)\s*\$_REQUEST'
+            'SELECT\s*\*'
           )
 
           labels=(
