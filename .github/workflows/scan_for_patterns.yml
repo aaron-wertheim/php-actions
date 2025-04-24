@@ -27,7 +27,7 @@ jobs:
           # Define patterns and labels
           patterns=(
             "\.dev"
-            "$_REQUEST\[\s*['\"][^'\"]+['\"]\s*\]\s*="
+            "$_REQUEST\[\s*['\"][^'\"]+['\"]\s*\]\s*=[^=]"
             "(string)\s*$_REQUEST"
             "\"\s*\.\s*\$_REQUEST"
             "'\s*\.\s*\$_REQUEST"
