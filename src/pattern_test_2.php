@@ -15,6 +15,13 @@ $env = "staging_2_dev.php";
 $other_env = "staging_2";
 $backup_path = "/var/www/safe-folder-2";
 
+// Should trigger: type casting with $_REQUEST
+$user2 = (string)$_REQUEST['user'];
+$pwd2 = (string) $_REQUEST['pass'];
+
+// Should NOT trigger: type casting with $_REQUEST
+$pwd2 = (string) $pwd2;
+
 // Should trigger: string concat with $_REQUEST
 echo "User2: " . $_REQUEST['username'];
 echo "User2: ".$_REQUEST['username'];
@@ -35,6 +42,12 @@ echo 'Form2: '.$_POST['form'];
 
 // Should NOT trigger: string concat
 echo "Path: " . $path;
+
+// Should trigger: SELECT * and string concat with $_GET
+$query2 = "SELECT * FROM realty_users WHERE id = " . $_GET['id'];
+
+// Should NOT trigger: SELECT *
+$good_query2 = "SELECT id FROM realty_users WHERE id = " . $user2;
 
 ?>
 

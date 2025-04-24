@@ -52,6 +52,11 @@ if($_REQUEST['password'] == '1234') {
     echo "Password is correct";
 };
 
+// Should trigger: SELECT * and string concat with $_GET
+$query = "SELECT * FROM realty_users WHERE id = " . $_GET['id'];
+
+// Should NOT trigger: SELECT *
+$good_query = "SELECT id FROM realty_users WHERE id = " . $user;
 
 // Just a normal line
 echo "Hello, world!";
