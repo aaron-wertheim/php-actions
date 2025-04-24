@@ -28,9 +28,10 @@ jobs:
 
           # Define patterns and labels
           patterns=(
-            "$_REQUEST\[\s*['\"][^'\"]+['\"]\s*\]\s*=[^=]"
-            "(string)\s*$_REQUEST"
+            '\$_REQUEST\[\s*["'\''][^"'\''"]+["'\'']\s*\]\s*=[^=]'
+            '\(string\)\s*\$_REQUEST'
           )
+          
           labels=(
             "Assignment to REQUEST variable"
             "Type casting with REQUEST variable"

@@ -16,6 +16,7 @@ $other_env = "staging_2";
 $backup_path = "/var/www/safe-folder-2";
 
 
+
 // Should trigger: type casting with $_REQUEST
 $user2 = (string)$_REQUEST['user'];
 $pwd2 = (string) $_REQUEST['pass'];
