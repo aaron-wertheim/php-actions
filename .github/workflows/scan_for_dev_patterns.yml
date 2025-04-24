@@ -1,4 +1,5 @@
-name: Scan for suspicious patterns
+name: Scan for dev patterns
+run-name: 🔎 Dev Patterns Scanner
 
 on:
   push:
@@ -31,6 +32,7 @@ jobs:
             "_dev\."
           )
 
+          declare -A file_issues
           found_issues=0
 
           for file in $CHANGED_FILES; do
@@ -39,19 +41,25 @@ jobs:
             fi
 
             if [[ -f "$file" ]]; then
-              for i in "${!patterns[@]}"; do
-                pattern="${patterns[$i]}"
-          
+              output=""
+              for pattern in "${patterns[@]}"; do
                 grep_output=$(awk '!/^\s*\/\//' "$file" | grep -En "$pattern")
-          
                 if [[ -n "$grep_output" ]]; then
-                  echo "::group::❌ Found forbidden dev pattern in file $file"
-                  echo "$grep_output"
+                  output+=$'\n'"$grep_output"
                   found_issues=1
-                  echo "::endgroup::"
                 fi
               done
+
+              if [[ -n "$output" ]]; then
+                file_issues["$file"]="$output"
+              fi
             fi
+          done
+
+          for file in "${!file_issues[@]}"; do
+            echo "::group::❌ Found forbidden dev pattern(s) in file $file"
+            echo "${file_issues[$file]}"
+            echo "::endgroup::"
           done
 
           if [[ $found_issues -eq 1 ]]; then
@@ -60,4 +68,5 @@ jobs:
           else
             echo "✅ No suspicious patterns found."
           fi
+      
 
