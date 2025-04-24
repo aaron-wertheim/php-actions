@@ -60,6 +60,7 @@ WHERE id = " . $_REQUEST['id'];
 // Should NOT trigger: SELECT *
 $good_query2 = "SELECT id FROM realty_users WHERE id = " . $user2;
 
+
 ?>
 
 <!DOCTYPE html>

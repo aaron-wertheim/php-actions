@@ -30,12 +30,13 @@ jobs:
             '\$_REQUEST\[\s*["'\''][^"'\''"]+["'\'']\s*\]\s*=[^=]'
             '\(string\)\s*\$_REQUEST'
           )
-          
+
           labels=(
             "Assignment to REQUEST variable"
             "Type casting with REQUEST variable"
           )
 
+          declare -A file_label_issues
           found_issues=0
 
           for file in $CHANGED_FILES; do
@@ -47,17 +48,31 @@ jobs:
               for i in "${!patterns[@]}"; do
                 pattern="${patterns[$i]}"
                 label="${labels[$i]}"
-          
                 grep_output=$(awk '!/^\s*\/\//' "$file" | grep -En "$pattern")
-        
+
                 if [[ -n "$grep_output" ]]; then
-                  echo "::group::❌ Found forbidden pattern '$label' in file $file"
-                  echo "$grep_output"
+                  key="$file|$label"
+                  file_label_issues["$key"]="$grep_output"
                   found_issues=1
-                  echo "::endgroup::"
                 fi
               done
             fi
+          done
+
+          # Display results
+          declare -A file_aggregator
+
+          for key in "${!file_label_issues[@]}"; do
+            file="${key%%|*}"
+            label="${key##*|}"
+            entry=$'\n'"🔸 [$label]"$'\n'"${file_label_issues[$key]}"
+            file_aggregator["$file"]+="$entry"
+          done
+
+          for file in "${!file_aggregator[@]}"; do
+            echo "::group::❌ Found suspicious patterns in file $file"
+            echo "${file_aggregator[$file]}"
+            echo "::endgroup::"
           done
 
           if [[ $found_issues -eq 1 ]]; then
