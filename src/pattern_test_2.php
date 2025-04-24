@@ -52,7 +52,7 @@ echo "Path: " . $path;
 $query2 = "SELECT * FROM realty_users WHERE id = " . $_GET['id'];
 $query2 = "SELECT  * FROM realty_users WHERE id = " . $_GET['id'];
 
-// Should NOT trigger: SELECT *
+// Should trigger: SELECT *
 $query_multi = "SELECT
 *
 FROM realty_users

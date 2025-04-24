@@ -50,7 +50,15 @@ jobs:
               for i in "${!patterns[@]}"; do
                 pattern="${patterns[$i]}"
                 label="${labels[$i]}"
-                grep_output=$(awk '!/^\s*\/\//' "$file" | grep -En "$pattern")
+                
+                if [[ "$label" == "Use of SELECT * in DB query" ]]; then
+                  grep_output=$(awk '!/^\s*\/\//' "$file" | tr '\n' ' ' | grep -Eon 'SELECT\s+\*')
+                  if [[ -n "$grep_output" ]]; then
+                    grep_output="(possible multi-line match) $grep_output"
+                  fi
+                else
+                  grep_output=$(awk '!/^\s*\/\//' "$file" | grep -En "$pattern")
+                fi
 
                 if [[ -n "$grep_output" ]]; then
                   key="$file|$label"
