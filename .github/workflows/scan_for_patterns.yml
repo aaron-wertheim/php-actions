@@ -35,6 +35,7 @@ jobs:
           labels=(
             "Assignment to REQUEST variable"
             "Type casting with REQUEST variable"
+            "Use of SELECT * in DB query"
           )
 
           declare -A file_label_issues
