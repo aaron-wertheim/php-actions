@@ -2,7 +2,7 @@ name: General Patterns Scanner
 run-name: General Patterns
 
 on:
-  push:
+  pull_request:
     branches:
       - '**'
 
