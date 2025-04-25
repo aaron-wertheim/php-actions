@@ -20,10 +20,9 @@ jobs:
       - name: Get list of changed files
         id: changes
         run: |
-          echo "CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD | tr '\n' ' ')" >> $GITHUB_ENV
+          echo "CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | tr '\n' ' ')" >> $GITHUB_ENV
 
       - name: Scan for suspicious patterns
-        continue-on-error: true
         run: |
           echo "🔍 Scanning for suspicious patterns in changed files..."
 
@@ -52,7 +51,7 @@ jobs:
                 pattern="${patterns[$i]}"
                 label="${labels[$i]}"
                 grep_output=$(awk '!/^\s*\/\//' "$file" | grep -En "$pattern")
-          
+
                 if [[ -n "$grep_output" ]]; then
                   key="$file|$label"
                   file_label_issues["$key"]="$grep_output"
@@ -62,8 +61,8 @@ jobs:
             fi
           done
 
+          # Display results grouped by file
           declare -A file_aggregator
-
           for key in "${!file_label_issues[@]}"; do
             file="${key%%|*}"
             label="${key##*|}"
@@ -71,8 +70,8 @@ jobs:
             file_aggregator["$file"]+="$entry"
           done
 
+          # Log to GitHub Actions output and summary
           if [[ $found_issues -eq 1 ]]; then
-            if [[ $found_issues -eq 1 ]]; then
             echo "🚫 Suspicious patterns detected. Logging warnings to summary..."
 
             echo "### ⚠️ Suspicious Patterns Found" >> $GITHUB_STEP_SUMMARY
@@ -89,6 +88,8 @@ jobs:
               echo '```' >> $GITHUB_STEP_SUMMARY
               echo "" >> $GITHUB_STEP_SUMMARY
             done
+
+            # Do not exit with failure — this is a soft warning
           else
             echo "✅ No suspicious patterns found."
             echo "### ✅ No suspicious patterns found" >> $GITHUB_STEP_SUMMARY
