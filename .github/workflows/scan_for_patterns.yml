@@ -5,8 +5,6 @@ on:
   pull_request:
     branches:
       - '**'
-    paths-ignore:
-      - '.github/workflows/**'
 
 jobs:
   scan-files:
@@ -45,6 +43,10 @@ jobs:
           found_issues=0
 
           for file in $CHANGED_FILES; do
+            if [[ "$file" == .github/workflows/* ]]; then
+              continue
+            fi
+
             if [[ -f "$file" ]]; then
               for i in "${!patterns[@]}"; do
                 pattern="${patterns[$i]}"
