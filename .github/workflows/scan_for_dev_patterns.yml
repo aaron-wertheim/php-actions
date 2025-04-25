@@ -45,15 +45,25 @@ jobs:
               for pattern in "${patterns[@]}"; do
                 grep_output=$(awk '!/^\s*\/\//' "$file" | grep -En "$pattern")
                 if [[ -n "$grep_output" ]]; then
-                  while IFS= read -r line; do
-                    lineno=$(echo "$line" | cut -d: -f1)
-                    content=$(echo "$line" | cut -d: -f2-)
-                    echo "::error file=$file,line=$lineno::Forbidden dev pattern found: $content"
-                  done <<< "$grep_output"
+                  output+=$'\n'"$grep_output"
                   found_issues=1
                 fi
               done
+
+              if [[ -n "$output" ]]; then
+                file_issues["$file"]="$output"
+              fi
             fi
+          done
+
+          for file in "${!file_issues[@]}"; do
+            echo "::group::Found forbidden dev pattern(s) in file $file"
+            while IFS= read -r line; do
+              lineno=$(echo "$line" | cut -d: -f1)
+              content=$(echo "$line" | cut -d: -f2-)
+              echo "::error file=$file,line=$lineno::Forbidden dev pattern found: $content"
+            done <<< "${file_issues[$file]}"
+            echo "::endgroup::"
           done
 
           if [[ $found_issues -eq 1 ]]; then
