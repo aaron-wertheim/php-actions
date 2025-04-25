@@ -1,5 +1,5 @@
 name: Scan for dev patterns
-run-name: Dev Patterns Scan
+run-name: 🔎 Dev Patterns
 
 on:
   pull_request:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   scan-files:
-    name: Dev Patterns Scanner
+    name: 🔎 Dev Patterns Scanner
     runs-on: ubuntu-latest
 
     steps:
@@ -24,7 +24,7 @@ jobs:
 
       - name: Scan for dev patterns
         run: |
-          echo "Scanning for dev patterns in changed files..."
+          echo "🔍 Scanning for dev patterns in changed files..."
 
           patterns=(
             "\.dev\.realtyads\.com"
@@ -57,19 +57,16 @@ jobs:
           done
 
           for file in "${!file_issues[@]}"; do
-            echo "::error file=$file::Forbidden dev pattern(s) found in $file"
-            echo "::group::Forbidden dev pattern(s) found in $file"
-            while IFS= read -r line; do
-              lineno=$(echo "$line" | cut -d: -f1)
-              content=$(echo "$line" | cut -d: -f2-)
-              echo "$lineno: $content"
-            done <<< "${file_issues[$file]}"
+            echo "::group:: ::error:: Found forbidden dev pattern(s) in file $file"
+            echo "${file_issues[$file]}"
             echo "::endgroup::"
           done
 
           if [[ $found_issues -eq 1 ]]; then
-            echo "::error::Suspicious patterns detected. Please fix before committing."
+            echo "🚫 Suspicious patterns detected. Please fix before committing."
             exit 1
           else
-            echo "::notice::No suspicious patterns found."
+            echo "✅ No suspicious patterns found."
           fi
+      
+
