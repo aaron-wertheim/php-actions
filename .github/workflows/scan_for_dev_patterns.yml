@@ -57,11 +57,12 @@ jobs:
           done
 
           for file in "${!file_issues[@]}"; do
-            echo "::group::Found forbidden dev pattern(s) in file $file"
+            echo "::error file=$file::❌ Forbidden dev pattern(s) found in **$file**"
+            echo "::group::Forbidden dev pattern(s) in $file"
             while IFS= read -r line; do
               lineno=$(echo "$line" | cut -d: -f1)
               content=$(echo "$line" | cut -d: -f2-)
-              echo "::error file=$file,line=$lineno::Forbidden dev pattern found: $content"
+              echo "::notice file=$file,line=$lineno::$content"
             done <<< "${file_issues[$file]}"
             echo "::endgroup::"
           done
