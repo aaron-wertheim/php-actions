@@ -72,7 +72,7 @@ jobs:
           done
 
           for file in "${!file_aggregator[@]}"; do
-            echo "::group::❌ Found suspicious patterns in file $file"
+            echo "::group::Found suspicious patterns in file $file"
             echo "${file_aggregator[$file]}"
             echo "::endgroup::"
           done

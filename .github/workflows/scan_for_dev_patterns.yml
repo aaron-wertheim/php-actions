@@ -57,7 +57,7 @@ jobs:
           done
 
           for file in "${!file_issues[@]}"; do
-            echo "::group::::error::Found forbidden dev pattern(s) in file __$file__"
+            echo "::group::Found forbidden dev pattern(s) in file file"
             echo "${file_issues[$file]}"
             echo "::endgroup::"
           done
