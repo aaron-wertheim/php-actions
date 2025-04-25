@@ -2,7 +2,7 @@ name: Scan for dev patterns
 run-name: 🔎 Dev Patterns
 
 on:
-  push:
+  pull_request:
     branches:
       - '**'
 

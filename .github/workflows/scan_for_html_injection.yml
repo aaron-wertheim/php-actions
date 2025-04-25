@@ -2,7 +2,7 @@ name: Scan for HTML injection patterns
 run-name: 🔎 HTML Injection
 
 on:
-  push:
+  pull_request:
     branches:
       - '**'
 

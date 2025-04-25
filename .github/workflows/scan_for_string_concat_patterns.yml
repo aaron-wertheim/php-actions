@@ -1,8 +1,8 @@
 name: Scan for SQL Injection Vulnerabilities
-run-name: 🔎 SQL Injection Vulnerabilities
+run-name: 🔎 SQL Injection
 
 on:
-  push:
+  pull_request:
     branches:
       - '**'
 
