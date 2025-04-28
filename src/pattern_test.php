@@ -9,7 +9,7 @@
 //$path = "/var/www-dy/some-folder/file.php";
 
 // Should trigger: _dev
-//$env = "staging_dev.php";
+$env = "staging_dev.php";
 
 // Safe usage (should NOT trigger)
 $other_env = "staging";
