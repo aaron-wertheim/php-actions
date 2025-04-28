@@ -27,6 +27,7 @@ jobs:
           echo "Scanning for dev patterns in changed files..."
 
           patterns=(
+            "\.dev\.realtyads\.com"
             "var/www-dy/"
             "_dev\."
           )
