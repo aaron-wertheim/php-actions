@@ -51,7 +51,7 @@ jobs:
               for i in "${!patterns[@]}"; do
                 pattern="${patterns[$i]}"
                 label="${labels[$i]}"
-                grep_output=$(awk '!/^\s*\/\//' "$file" | grep -En "$pattern")
+                grep_output=$(awk '!/^\s*\/\//' "$file" | grep -En "$pattern" || true)
           
                 if [[ -n "$grep_output" ]]; then
                   key="$file|$label"

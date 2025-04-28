@@ -43,7 +43,7 @@ jobs:
             if [[ -f "$file" ]]; then
               output=""
               for pattern in "${patterns[@]}"; do
-                grep_output=$(awk '!/^\s*\/\//' "$file" | grep -n "$pattern")
+                grep_output=$(awk '!/^\s*\/\//' "$file" | grep -n "$pattern" || true)
                 if [[ -n "$grep_output" ]]; then
                   output+="$grep_output"$'\n'
                   found_issues=1
