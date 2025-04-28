@@ -3,13 +3,13 @@
 // This is a test file to trigger the GitHub Actions scan
 
 // Should trigger: .dev.realtyads.com
-$api_url = "https://my-branch.dev.realtyads.com/endpoint";
+//$api_url = "https://my-branch.dev.realtyads.com/endpoint";
 
 // Should trigger: var/www-dy/
-$path = "/var/www-dy/some-folder/file.php";
+//$path = "/var/www-dy/some-folder/file.php";
 
 // Should trigger: _dev
-$env = "staging_dev.php";
+//$env = "staging_dev.php";
 
 // Safe usage (should NOT trigger)
 $other_env = "staging";
