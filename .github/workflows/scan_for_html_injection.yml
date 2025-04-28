@@ -1,5 +1,5 @@
 name: Scan for HTML injection patterns
-run-name: 🔎 HTML Injection
+run-name: HTML Injection
 
 on:
   pull_request:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   scan-files:
-    name: 🔎 HTML Injection Scanner
+    name: HTML Injection Scanner
     runs-on: ubuntu-latest
 
     steps:
@@ -24,7 +24,7 @@ jobs:
 
       - name: Scan for HTML injection patterns
         run: |
-          echo "🔍 Scanning for HTML injection patterns in changed files..."
+          echo "Scanning for HTML injection patterns in changed files..."
 
           patterns=(
             "<?=\s*\$_REQUEST"
@@ -66,5 +66,5 @@ jobs:
             echo "::error::Suspicious patterns detected. Please fix before committing."
             exit 1
           else
-            echo "✅ No suspicious patterns found."
+            echo "::notice::No suspicious patterns found."
           fi

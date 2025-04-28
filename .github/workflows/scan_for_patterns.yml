@@ -8,7 +8,7 @@ on:
 
 jobs:
   scan-files:
-    name: 🔎 General Pattern Scan (No Block — Review Warnings)
+    name: General Pattern Scan (No Block — Review Warnings)
     runs-on: ubuntu-latest
 
     steps:
@@ -25,7 +25,7 @@ jobs:
       - name: Scan for suspicious patterns
         continue-on-error: true
         run: |
-          echo "🔍 Scanning for suspicious patterns in changed files..."
+          echo "Scanning for suspicious patterns in changed files..."
 
           patterns=(
             '\$_REQUEST\[\s*["'\''][^"'\''"]+["'\'']\s*\]\s*=[^=]'
@@ -67,7 +67,7 @@ jobs:
           for key in "${!file_label_issues[@]}"; do
             file="${key%%|*}"
             label="${key##*|}"
-            entry=$'\n'"🔸 [$label]"$'\n'"${file_label_issues[$key]}"
+            entry=$'\n\n'" **$label**"$'\n'"${file_label_issues[$key]}"
             file_aggregator["$file"]+="$entry"
           done
 
@@ -78,8 +78,8 @@ jobs:
           done
 
           if [[ $found_issues -eq 1 ]]; then
-            echo "::warning::⚠️ Suspicious patterns detected. Please review the logs above."
+            echo "::warning::Suspicious patterns detected. Please review the logs above."
             exit 1
           else
-            echo "✅ No suspicious patterns found."
+            echo "::notice::No suspicious patterns found."
           fi

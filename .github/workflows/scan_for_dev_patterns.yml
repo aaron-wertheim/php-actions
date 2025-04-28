@@ -1,5 +1,5 @@
 name: Scan for dev patterns
-run-name: 🔎 Dev Patterns
+run-name: Dev Patterns
 
 on:
   pull_request:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   scan-files:
-    name: 🔎 Dev Patterns Scanner
+    name: Dev Patterns Scanner
     runs-on: ubuntu-latest
 
     steps:
@@ -24,7 +24,7 @@ jobs:
 
       - name: Scan for dev patterns
         run: |
-          echo "🔍 Scanning for dev patterns in changed files..."
+          echo "Scanning for dev patterns in changed files..."
 
           patterns=(
             "\.dev\.realtyads\.com"
@@ -66,7 +66,7 @@ jobs:
             echo "::error::Suspicious patterns detected. Please fix before committing."
             exit 1
           else
-            echo "✅ No suspicious patterns found."
+            echo "::notice::No suspicious patterns found."
           fi
       
 

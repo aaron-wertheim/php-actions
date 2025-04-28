@@ -1,5 +1,5 @@
 name: Scan for SQL Injection Vulnerabilities
-run-name: 🔎 SQL Injection
+run-name: SQL Injection
 
 on:
   pull_request:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   scan-files:
-    name: 🔎 SQL Injection Vulnerabilities Scanner
+    name: SQL Injection Vulnerabilities Scanner
     runs-on: ubuntu-latest
 
     steps:
@@ -24,7 +24,7 @@ jobs:
 
       - name: Scan for SQL injection vulnerabilities
         run: |
-          echo "🔍 Scanning for possible SQL vulnerabilities in changed files..."
+          echo "Scanning for possible SQL vulnerabilities in changed files..."
 
           patterns=(
             "\"\s*\.\s*\$_REQUEST"
@@ -69,5 +69,5 @@ jobs:
             echo "::error::Suspicious patterns detected. Please fix before committing."
             exit 1
           else
-            echo "✅ No suspicious patterns found."
+            echo "::notice::No suspicious patterns found."
           fi
