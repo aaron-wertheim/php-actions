@@ -6,10 +6,10 @@
 $api_url = "https://my-branch-2.dev.realtyads.com/endpoint2";
 
 // Should trigger: var/www-dy/
-//$path = "/var/www-dy/some-folder-2/file.php";
+$path = "/var/www-dy/some-folder-2/file.php";
 
 // Should trigger: _dev
-//$env = "staging_2_dev.php";
+$env = "staging_2_dev.php";
 
 // Safe usage (should NOT trigger)
 $other_env = "staging_2";
@@ -46,7 +46,7 @@ echo 'Form2: ' . $_POST['form'];
 echo 'Form2: '.$_POST['form'];
 
 // Should NOT trigger: string concat
-echo "Path: " . $backup_path;
+echo "Path: " . $path;
 
 // Should trigger: SELECT * and string concat with $_GET
 $query2 = "SELECT * FROM realty_users WHERE id = " . $_GET['id'];
