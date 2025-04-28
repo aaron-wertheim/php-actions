@@ -67,7 +67,7 @@ jobs:
           for key in "${!file_label_issues[@]}"; do
             file="${key%%|*}"
             label="${key##*|}"
-            entry=$'\n\n'" ::warning::$label"$'\n'"${file_label_issues[$key]}"
+            entry=$'\n'" ::warning::$label"$'\n'"${file_label_issues[$key]}"$'\n'
             file_aggregator["$file"]+="$entry"
           done
 
@@ -78,7 +78,7 @@ jobs:
           done
 
           if [[ $found_issues -eq 1 ]]; then
-            echo "::warning::Suspicious patterns detected. Please review the logs above."
+            echo "::error::Suspicious patterns detected. Please review the logs above."
             exit 1
           else
             echo "::notice::No suspicious patterns found."
