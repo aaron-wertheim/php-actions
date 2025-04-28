@@ -1,0 +1,73 @@
+name: Scan for SQL Injection Vulnerabilities
+run-name: SQL Injection
+
+on:
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  scan-files:
+    name: SQL Injection Vulnerabilities Scanner
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get list of changed files
+        id: changes
+        run: |
+          echo "CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD | tr '\n' ' ')" >> $GITHUB_ENV
+
+      - name: Scan for SQL injection vulnerabilities
+        run: |
+          echo "Scanning for possible SQL vulnerabilities in changed files..."
+
+          patterns=(
+            "\"\s*\.\s*\$_REQUEST"
+            "'\s*\.\s*\$_REQUEST"
+            "\"\s*\.\s*\$_GET"
+            "'\s*\.\s*\$_GET"
+            "\"\s*\.\s*\$_POST"
+            "'\s*\.\s*\$_POST"
+          )
+
+          declare -A file_issues
+          found_issues=0
+
+          for file in $CHANGED_FILES; do
+            if [[ "$file" == .github/workflows/* ]]; then
+              continue
+            fi
+
+            if [[ -f "$file" ]]; then
+              output=""
+              for pattern in "${patterns[@]}"; do
+                grep_output=$(awk '!/^\s*\/\//' "$file" | grep -n "$pattern" || true)
+                if [[ -n "$grep_output" ]]; then
+                  output+="$grep_output"$'\n'
+                  found_issues=1
+                fi
+              done
+
+              if [[ -n "$output" ]]; then
+                file_issues["$file"]="$output"
+              fi
+            fi
+          done
+
+          for file in "${!file_issues[@]}"; do
+            echo "::group::Found possible SQL injection vulnerabilities in file $file"
+            echo "${file_issues[$file]}"
+            echo "::endgroup::"
+          done
+
+          if [[ $found_issues -eq 1 ]]; then
+            echo "::error::Suspicious patterns detected. Please fix before committing."
+            exit 1
+          else
+            echo "::notice::No suspicious patterns found."
+          fi
