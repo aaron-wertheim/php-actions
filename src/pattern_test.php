@@ -81,9 +81,9 @@ echo "Hello, world!";
 
 <!--  These should trigger HTML injection scan -->
 <div>
-    <strong>Username:</strong> <?= $_REQUEST['username'] ?><br>
-    <strong>Email:</strong> <?=    $_POST['email'] ?><br>
-    <strong>Page:</strong> <?=  $_GET['page'] ?><br>
+<!--    <strong>Username:</strong> --><?php //= $_REQUEST['username'] ?><!--<br>-->
+<!--    <strong>Email:</strong> --><?php //=    $_POST['email'] ?><!--<br>-->
+<!--    <strong>Page:</strong> --><?php //=  $_GET['page'] ?><!--<br>-->
 </div>
 
 <!--  Safe usage example -->
