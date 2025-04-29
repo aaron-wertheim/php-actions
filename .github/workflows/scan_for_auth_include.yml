@@ -27,10 +27,10 @@ jobs:
           echo "Scanning AJAX files for required auth includes..."
           missing_auth=0
 
-          # Define the patterns and corresponding labels
+          # Define the patterns and human-readable labels
           patterns=(
-            'require_once.*auth.php'
-            'new\s+reporting_auth\s*\('
+            "require_once.*auth\.php"
+            "new\s+reporting_auth\s*\("
           )
           labels=(
             "Include statement for auth.php (require_once)"
@@ -45,8 +45,10 @@ jobs:
                 pattern="${patterns[$i]}"
                 label="${labels[$i]}"
 
-                # Ignore commented lines (starting with optional whitespace then //)
-                if ! grep -qE "^[[:space:]]*[^/].*$pattern" "$file"; then
+                # Use awk to exclude commented lines, then grep for the pattern
+                match=$(awk '!/^\s*\/\//' "$file" | grep -E "$pattern" || true)
+
+                if [[ -z "$match" ]]; then
                   echo "::error file=$file::Missing required pattern: $label"
                   missing_auth=1
                 else
