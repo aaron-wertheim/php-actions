@@ -27,29 +27,37 @@ jobs:
           echo "Scanning AJAX files for required auth includes..."
           missing_auth=0
 
-          # Define the patterns to check
+          # Define the patterns and corresponding labels
           patterns=(
             'require_once.*auth\.php'
             'new\s+reporting_auth\s*\('
+          )
+          labels=(
+            "Include statement for auth.php (require_once)"
+            "Instantiation of reporting_auth class"
           )
 
           for file in $CHANGED_FILES; do
             if [[ "$file" == *ajax/*.php ]] && [[ -f "$file" ]]; then
               echo "Checking $file..."
 
-              for pattern in "${patterns[@]}"; do
-                if ! grep -qE "^[[:space:]]*[^/]"$'\t'"*.*$pattern" "$file"; then
-                  echo "::error file=$file::Missing required pattern: $pattern"
+              for i in "${!patterns[@]}"; do
+                pattern="${patterns[$i]}"
+                label="${labels[$i]}"
+
+                # Ignore commented lines (starting with optional whitespace then //)
+                if ! grep -qE "^[[:space:]]*[^/].*$pattern" "$file"; then
+                  echo "::error file=$file::Missing required pattern: $label"
                   missing_auth=1
                 else
-                  echo "::notice file=$file::Pattern found: $pattern"
+                  echo "::notice file=$file::Found: $label"
                 fi
               done
             fi
           done
 
           if [[ $missing_auth -eq 1 ]]; then
-            echo "::error::One or more AJAX files are missing required auth includes or instantiation."
+            echo "::error::One or more AJAX files are missing required auth includes or checks."
             exit 1
           else
             echo "::notice::All AJAX files passed auth checks."
