@@ -27,7 +27,7 @@ jobs:
           echo "Scanning AJAX files for required auth includes..."
           missing_auth=0
 
-          # Define the patterns and human-readable labels
+          # Define patterns and their human-readable labels
           patterns=(
             "require_once.*auth\.php"
             "new\s+reporting_auth\s*\("
@@ -39,7 +39,8 @@ jobs:
 
           for file in $CHANGED_FILES; do
             if [[ "$file" == *ajax/*.php ]] && [[ -f "$file" ]]; then
-              echo "::group::Checking $file..."
+              echo "::group::Checking $file"
+              file_has_error=0
 
               for i in "${!patterns[@]}"; do
                 pattern="${patterns[$i]}"
@@ -49,12 +50,15 @@ jobs:
 
                 if [[ -z "$match" ]]; then
                   echo "::error file=$file::Missing required pattern: $label"
+                  file_has_error=1
                   missing_auth=1
-                else
-                  echo "::notice file=$file::Found: $label"
                 fi
               done
-              
+
+              if [[ $file_has_error -eq 0 ]]; then
+                echo "::notice file=$file::All required auth patterns found."
+              fi
+
               echo "::endgroup::"
             fi
           done
