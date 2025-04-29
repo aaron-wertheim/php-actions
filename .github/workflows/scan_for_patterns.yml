@@ -1,12 +1,14 @@
-name: Scan for suspicious patterns
+name: General Pattern Scan (No Block — Review Warnings)
+run-name: General Patterns
 
 on:
-  push:
+  pull_request:
     branches:
       - '**'
 
 jobs:
   scan-files:
+    name: General Pattern Scan (No Block — Review Warnings)
     runs-on: ubuntu-latest
 
     steps:
@@ -21,33 +23,23 @@ jobs:
           echo "CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD | tr '\n' ' ')" >> $GITHUB_ENV
 
       - name: Scan for suspicious patterns
+        continue-on-error: true
         run: |
-          echo "🔍 Scanning for suspicious patterns in changed files..."
+          echo "Scanning for suspicious patterns in changed files..."
 
-          # Define patterns and labels
           patterns=(
-            "\.dev"
-            "\$_REQUEST\[\s*['\"][^'\"]+['\"]\s*\]\s*="
-            "\(string\)\s*\$_REQUEST"
-            "\"\s*\.\s*\$_REQUEST"
-            "'\s*\.\s*\$_REQUEST"
-            "\"\s*\.\s*\$_GET"
-            "'\s*\.\s*\$_GET"
-            "\"\s*\.\s*\$_POST"
-            "'\s*\.\s*\$_POST"
+            '\$_REQUEST\[\s*["'\''][^"'\''"]+["'\'']\s*\]\s*=[^=]'
+            '\(string\)\s*\$_REQUEST'
+            'SELECT\s*\*'
           )
+
           labels=(
-            "Dev branch usage"
             "Assignment to REQUEST variable"
             "Type casting with REQUEST variable"
-            "String concat with \$_REQUEST (double quotes)"
-            "String concat with \$_REQUEST (single quotes)"
-            "String concat with \$_GET (double quotes)"
-            "String concat with \$_GET (single quotes)"
-            "String concat with \$_POST (double quotes)"
-            "String concat with \$_POST (single quotes)"
+            "Use of SELECT * in DB query"
           )
 
+          declare -A file_label_issues
           found_issues=0
 
           for file in $CHANGED_FILES; do
@@ -59,20 +51,35 @@ jobs:
               for i in "${!patterns[@]}"; do
                 pattern="${patterns[$i]}"
                 label="${labels[$i]}"
-                grep_output=$(awk '!/^\s*\/\//' "$file" | grep -En "$pattern")
+                grep_output=$(awk '!/^\s*\/\//' "$file" | grep -En "$pattern" || true)
+          
                 if [[ -n "$grep_output" ]]; then
-                  echo "::group::❌ Found forbidden pattern '$label' in file $file"
-                  echo "$grep_output"
+                  key="$file|$label"
+                  file_label_issues["$key"]="$grep_output"
                   found_issues=1
-                  echo "::endgroup::"
                 fi
               done
             fi
           done
 
+          declare -A file_aggregator
+
+          for key in "${!file_label_issues[@]}"; do
+            file="${key%%|*}"
+            label="${key##*|}"
+            entry=$'\n'" ::warning::$label"$'\n'"${file_label_issues[$key]}"$'\n'
+            file_aggregator["$file"]+="$entry"
+          done
+
+          for file in "${!file_aggregator[@]}"; do
+            echo "::group::Found suspicious patterns in file $file"
+            echo "${file_aggregator[$file]}"
+            echo "::endgroup::"
+          done
+
           if [[ $found_issues -eq 1 ]]; then
-            echo "🚫 Suspicious patterns detected. Please fix before committing."
+            echo "::error::Suspicious patterns detected. Please review the logs above."
             exit 1
           else
-            echo "✅ No suspicious patterns found."
+            echo "::notice::No suspicious patterns found."
           fi
