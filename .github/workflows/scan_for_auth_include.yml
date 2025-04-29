@@ -1,0 +1,57 @@
+name: AJAX Auth Include Check
+run-name: Ensure AJAX files include auth
+
+on:
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  ajax-auth-check:
+    name: Check for missing auth includes in AJAX files
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get list of changed files
+        id: changes
+        run: |
+          echo "CHANGED_FILES=$(git diff --name-only origin/main...HEAD | tr '\n' ' ')" >> $GITHUB_ENV
+
+      - name: Scan AJAX files for auth include
+        run: |
+          echo "Scanning AJAX files for required auth includes..."
+          missing_auth=0
+
+          # Define the patterns to check
+          patterns=(
+            'require_once.*auth\.php'
+            'new\s+reporting_auth\s*\('
+          )
+
+          for file in $CHANGED_FILES; do
+            if [[ "$file" =~ ajax_.*\.php$ ]] && [[ -f "$file" ]]; then
+              echo "Checking $file..."
+
+              for pattern in "${patterns[@]}"; do
+                # Only match lines NOT starting with //
+                if ! grep -qE "^[[:space:]]*[^/]"$'\t'"*.*$pattern" "$file"; then
+                  echo "::error file=$file::Missing required pattern: $pattern"
+                  missing_auth=1
+                else
+                  echo "::notice file=$file::Pattern found: $pattern"
+                fi
+              done
+            fi
+          done
+
+          if [[ $missing_auth -eq 1 ]]; then
+            echo "::error::One or more AJAX files are missing required auth includes or instantiation."
+            exit 1
+          else
+            echo "::notice::All AJAX files passed auth checks."
+          fi
