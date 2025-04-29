@@ -29,7 +29,7 @@ jobs:
 
           # Define the patterns and corresponding labels
           patterns=(
-            'require_once.*auth\.php'
+            'require_once.*auth.php'
             'new\s+reporting_auth\s*\('
           )
           labels=(
