@@ -34,11 +34,10 @@ jobs:
           )
 
           for file in $CHANGED_FILES; do
-            if [[ "$file" =~ ajax_.*\.php$ ]] && [[ -f "$file" ]]; then
+            if [[ "$file" == */ajax/*.php ]] && [[ -f "$file" ]]; then
               echo "Checking $file..."
 
               for pattern in "${patterns[@]}"; do
-                # Only match lines NOT starting with //
                 if ! grep -qE "^[[:space:]]*[^/]"$'\t'"*.*$pattern" "$file"; then
                   echo "::error file=$file::Missing required pattern: $pattern"
                   missing_auth=1
