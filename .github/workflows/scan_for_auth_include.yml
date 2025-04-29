@@ -39,13 +39,12 @@ jobs:
 
           for file in $CHANGED_FILES; do
             if [[ "$file" == *ajax/*.php ]] && [[ -f "$file" ]]; then
-              echo "Checking $file..."
+              echo "::group::Checking $file..."
 
               for i in "${!patterns[@]}"; do
                 pattern="${patterns[$i]}"
                 label="${labels[$i]}"
 
-                # Use awk to exclude commented lines, then grep for the pattern
                 match=$(awk '!/^\s*\/\//' "$file" | grep -E "$pattern" || true)
 
                 if [[ -z "$match" ]]; then
@@ -55,6 +54,8 @@ jobs:
                   echo "::notice file=$file::Found: $label"
                 fi
               done
+              
+              echo "::endgroup::"
             fi
           done
 
