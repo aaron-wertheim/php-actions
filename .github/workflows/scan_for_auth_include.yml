@@ -34,7 +34,7 @@ jobs:
           )
 
           for file in $CHANGED_FILES; do
-            if [[ "$file" == */ajax/*.php ]] && [[ -f "$file" ]]; then
+            if [[ "$file" == *ajax/*.php ]] && [[ -f "$file" ]]; then
               echo "Checking $file..."
 
               for pattern in "${patterns[@]}"; do
